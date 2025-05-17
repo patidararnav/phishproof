@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.form-container {
+    max-width: 800px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.form-screen {
+    background-color: white;
+    border-radius: 10px;
+    padding: 3rem;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    display: none;
+    position: relative;
+}
+
+.form-screen.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.company-logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4a62ff;
+    margin-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #333;
+    text-align: left;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 3rem;
+}
+
+.cta-button {
+    background-color: #4a62ff;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #3a50e0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* New styles for questions */
+.progress-bar {
+    height: 6px;
+    background-color: #f1f1f1;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    overflow: hidden;
+}
+
+.progress-indicator {
+    height: 100%;
+    background-color: #4a62ff;
+    border-radius: 3px;
+    transition: width 0.3s ease;
+}
+
+.input-container {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+input, textarea {
+    width: 100%;
+    font-size: 18px;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: border-color 0.3s;
+}
+
+input:focus, textarea:focus {
+    border-color: #4a62ff;
+    outline: none;
+}
+
+.submit-btn {
+    float: right;
+}
+
+.success-icon {
+    font-size: 60px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.response-summary {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+    text-align: left;
+}
+
+.response-item {
+    margin-bottom: 10px;
+}
+
+.response-label {
+    font-weight: bold;
+    color: #666;
+} 

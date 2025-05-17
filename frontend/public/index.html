@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataCollect - Simple Form</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <!-- Welcome Screen -->
+        <div class="form-screen active" id="welcome-screen">
+            <div class="company-logo">DataCollect</div>
+            <h1>We help you gather insights from your customers</h1>
+            <p class="subtitle">Our simple forms make data collection a breeze.</p>
+            <button class="cta-button" id="start-button">Start collecting data</button>
+        </div>
+
+        <!-- Question 1: Name -->
+        <div class="form-screen" id="question-1">
+            <div class="progress-bar">
+                <div class="progress-indicator" style="width: 25%"></div>
+            </div>
+            <h2 class="question">What's your name?</h2>
+            <div class="input-container">
+                <input type="text" id="name-input" placeholder="Type your answer here..." autofocus>
+            </div>
+            <button class="cta-button submit-btn" data-question="name">Continue</button>
+        </div>
+
+        <!-- Question 2: Email -->
+        <div class="form-screen" id="question-2">
+            <div class="progress-bar">
+                <div class="progress-indicator" style="width: 50%"></div>
+            </div>
+            <h2 class="question">What's your email address?</h2>
+            <div class="input-container">
+                <input type="email" id="email-input" placeholder="name@example.com">
+            </div>
+            <button class="cta-button submit-btn" data-question="email">Continue</button>
+        </div>
+
+        <!-- Question 3: Feedback -->
+        <div class="form-screen" id="question-3">
+            <div class="progress-bar">
+                <div class="progress-indicator" style="width: 75%"></div>
+            </div>
+            <h2 class="question">Do you have any feedback for us?</h2>
+            <div class="input-container">
+                <textarea id="feedback-input" placeholder="Share your thoughts..." rows="5"></textarea>
+            </div>
+            <button class="cta-button submit-btn" data-question="feedback">Submit</button>
+        </div>
+
+        <!-- Thank You Screen -->
+        <div class="form-screen" id="thank-you-screen">
+            <div class="progress-bar">
+                <div class="progress-indicator" style="width: 100%"></div>
+            </div>
+            <div class="success-icon">✓</div>
+            <h2>Thank you for your responses!</h2>
+            <p class="subtitle">Your feedback has been submitted successfully.</p>
+            <div id="response-summary" class="response-summary"></div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html> 
