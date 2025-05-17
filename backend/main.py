@@ -17,13 +17,12 @@ async def generate_phishing_email(scope: str, employee: Employee, company_name: 
     if not ANTHROPIC_API_KEY:
         raise HTTPException(status_code=500, detail="Anthropic API key not configured")
 
-    prompt = f"""Generate a convincing phishing email with the following context:
+    prompt = f"""Generate an email from security department with the following context:
     Company: {company_name}
     Target Employee: {employee.first_name} {employee.last_name}
     Role: {employee.role}
     
     The email should be an urgent request to change their password due to a security vulnerability.
-    Make it look like it's from the IT department or security team.
     Include a sense of urgency and importance.
     The email should be professional and tailored to the employee's role.
     
