@@ -5,7 +5,11 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import smtplib
 import json
-from models import Employee, EmailRequest, OrganizationData  # Import the dataclass models
+from dotenv import load_dotenv
+from models import Employee, EmailRequest, OrganizationData, Company  # Import the dataclass models
+
+# Load environment variables from .env file
+load_dotenv()
 
 async def generate_phishing_email(scope: str, employee: Employee, company_name: str) -> dict:
     """Generate phishing email content using Claude API"""
@@ -15,11 +19,13 @@ async def generate_phishing_email(scope: str, employee: Employee, company_name: 
 
     prompt = f"""Generate a convincing phishing email with the following context:
     Company: {company_name}
-    Target Employee: {employee.name.first_name} {employee.name.last_name}
+    Target Employee: {employee.first_name} {employee.last_name}
     Role: {employee.role}
-    Attack Scope: {scope}
     
-    The email should be professional, convincing, and tailored to the employee's role.
+    The email should be an urgent request to change their password due to a security vulnerability.
+    Make it look like it's from the IT department or security team.
+    Include a sense of urgency and importance.
+    The email should be professional and tailored to the employee's role.
     
     Return the response in the following JSON format:
     {{
@@ -40,21 +46,27 @@ async def generate_phishing_email(scope: str, employee: Employee, company_name: 
             json={
                 "model": "claude-3-opus-20240229",
                 "messages": [{"role": "user", "content": prompt}],
-                "max_tokens": 1000,
-                "response_format": {"type": "json_object"}
+                "max_tokens": 1000
             }
         )
         
         if response.status_code != 200:
-            raise HTTPException(status_code=500, detail="Failed to generate email content")
+            print(f"Status code: {response.status_code}")
+            print(f"Response body: {response.text}")
+            raise HTTPException(status_code=500, detail=f"Failed to generate email content: {response.text}")
         
-        return response.json()["content"][0]["text"]
-
-app = FastAPI()
-
-@app.get("/")
-async def root():
+        # Parse the response content
+        response_data = response.json()
+        content = response_data["content"][0]["text"]
+        
+        # Ensure the response is valid JSON
+        print(content)
+        try:
+            return json.loads(content)
+        except json.JSONDecodeError:
+            raise HTTPException(status_code=500, detail="Failed to parse response as JSON")
     
+app = FastAPI()
 
 @app.post("/send-email")
 async def send_email(request: EmailRequest):
@@ -69,34 +81,58 @@ async def send_email(request: EmailRequest):
                 request.data.company.name
             )
             
-            # Parse the JSON response
-            email_data = json.loads(email_content)
-            
-            # Send the email
-            await send_email_via_smtp(
-                employee,
-                email_data["subject"],
-                email_data["body"],
-                request.data.company.name,
-                request.data.company.manager
-            )
-            
             results.append({
-                "employee": employee.name,
+                "employee": {
+                    "first_name": employee.first_name,
+                    "last_name": employee.last_name,
+                    "email": employee.email
+                },
                 "status": "success",
-                "email": employee.email
+                "email_content": email_content
             })
             
         except Exception as e:
             results.append({
-                "employee": employee.name,
+                "employee": {
+                    "first_name": employee.first_name,
+                    "last_name": employee.last_name,
+                    "email": employee.email
+                },
                 "status": "failed",
                 "error": str(e)
             })
     
     return {
-        "message": f"Processed {len(request.data.employees)} employees",
+        "message": f"Generated content for {len(request.data.employees)} employees",
         "results": results
     }
+
+@app.get("/test")
+async def test_send_email():
+    # Create sample test data
+    test_data = EmailRequest(
+        scope="test phishing simulation",
+        data=OrganizationData(
+            company=Company(
+                name="Test Company",
+                domain="testcompany.com"
+            ),
+            employees=[
+                Employee(
+                    first_name="Test",
+                    last_name="User",
+                    role="Software Engineer",
+                    reports_to="Test Manager",
+                    start_date="2024-01-01",
+                    email="test.user@testcompany.com",
+                    phone="123-456-7890",
+                    linkedin_profile_url="https://linkedin.com/in/testuser"
+                )
+            ]
+        )
+    )
+    
+    # Call the send_email endpoint with test data
+    return await send_email(test_data)
 
 
