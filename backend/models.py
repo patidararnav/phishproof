@@ -10,15 +10,15 @@ class Company:
 @dataclass
 class Employee:
     """Represents an employee within a company."""
-    name: str
+    first_name: str
+    last_name: str
     role: str
-    reports_to: str  # Could be an Employee ID or manager's name
+    reports_to: str # Could be an Employee ID or manager's name
     start_date: str  # e.g., "2023-01-01"
     email: str
     phone: str
     # Additional fields that might be useful from recon
     linkedin_profile_url: Optional[str] = None
-
 
 @dataclass
 class ReconInput:
@@ -33,4 +33,10 @@ class OrganizationData:
     company: Company
     employees: List[Employee] = field(default_factory=list)
     # org_chart_representation could be a dictionary, a graph, or other structured data
-    org_chart_representation: Optional[Any] = None 
+    org_chart_representation: Optional[Any] = None
+
+@dataclass
+class EmailRequest:
+    """Request for sending phishing emails."""
+    scope: str
+    data: OrganizationData
