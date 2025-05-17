@@ -338,18 +338,33 @@
             <p class="subtitle">Based on our simulation, here's what a real pentest might reveal:</p>
             
             <div id="response-summary" class="response-summary">
-                <h3>Summary of Findings:</h3>
-                <p>Our simulated penetration test has identified several potential security risks that could make your organization vulnerable to social engineering attacks.</p>
-                
-                <h3>Recommended Next Steps:</h3>
-                <ul>
-                    <li>Schedule a full penetration test with our security team</li>
-                    <li>Implement security awareness training for all employees</li>
-                    <li>Review and update email security policies</li>
-                    <li>Conduct regular phishing simulations</li>
-                </ul>
-                
-                <p>A detailed report has been sent to your email address. Our team will contact you shortly to discuss how we can help strengthen your security posture.</p>
+                <div class="click-stats">
+                    <h3>Phishing Test Results</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number" id="total-clicks">0</span>
+                            <span class="stat-label">Total Clicks</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="unique-users">0</span>
+                            <span class="stat-label">Unique Users</span>
+                        </div>
+                    </div>
+                    
+                    <div class="user-stats">
+                        <h4>User Click Details</h4>
+                        <div id="user-clicks-table" class="user-clicks-table">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="recent-clicks">
+                        <h4>Recent Click Activity</h4>
+                        <div id="clicks-list" class="clicks-list">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
             </div>
             
             <div class="button-container">

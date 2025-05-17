@@ -515,4 +515,43 @@ h3 {
     .form-container {
         margin-top: 20px;
     }
+}
+
+.user-clicks-table {
+    width: 100%;
+    margin-top: 15px;
+    background: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.user-clicks-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-clicks-table th,
+.user-clicks-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.user-clicks-table th {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+.user-clicks-table tr:last-child td {
+    border-bottom: none;
+}
+
+.click-count {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.timestamp {
+    color: #666;
+    font-size: 0.9em;
 } 
