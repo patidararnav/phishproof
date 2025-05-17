@@ -7,9 +7,13 @@ import smtplib
 import json
 from dotenv import load_dotenv
 from models import Employee, EmailRequest, OrganizationData, Company  # Import the dataclass models
+import mailslurp_client
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
+
+logger = logging.getLogger(__name__)
 
 async def generate_phishing_email(scope: str, employee: Employee, company_name: str) -> str:
     """Generate phishing email content using Claude API"""
@@ -110,7 +114,9 @@ async def send_email(request: EmailRequest):
 
 @app.get("/test")
 async def test_send_email():
-    # Create sample test data
+    logger.info("Starting test email generation and sending process")
+    
+    # Create sample test data with all required fields
     test_data = EmailRequest(
         scope="test phishing simulation",
         data=OrganizationData(
@@ -123,9 +129,9 @@ async def test_send_email():
                     first_name="Test",
                     last_name="User",
                     role="Software Engineer",
+                    email="test.recipient@example.com",
                     reports_to="Test Manager",
                     start_date="2024-01-01",
-                    email="test.user@testcompany.com",
                     phone="123-456-7890",
                     linkedin_profile_url="https://linkedin.com/in/testuser"
                 )
@@ -133,7 +139,56 @@ async def test_send_email():
         )
     )
     
-    # Call the send_email endpoint with test data
-    return await send_email(test_data)
+    # Generate email content
+    logger.info("Generating email content")
+    result = await send_email(test_data)
+    
+    if result["results"] and result["results"][0]["status"] == "success":
+        try:
+            # Get SMTP settings from environment
+            smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
+            smtp_port = int(os.getenv("SMTP_PORT", "587"))
+            smtp_username = os.getenv("SMTP_USERNAME")
+            smtp_password = os.getenv("SMTP_PASSWORD")
+            
+            if not all([smtp_host, smtp_port, smtp_username, smtp_password]):
+                raise ValueError("Missing SMTP configuration")
+            
+            logger.info(f"Using SMTP server: {smtp_host}:{smtp_port}")
+            
+            # Create email message
+            msg = MIMEMultipart('alternative')
+            msg['Subject'] = "Urgent: Security Update Required"
+            msg['From'] = f"IT Security <{smtp_username}>"
+            msg['To'] = test_data.data.employees[0].email
+            
+            # Add HTML content
+            html_content = result["results"][0]["email_content"]
+            msg.attach(MIMEText(html_content, 'html'))
+            
+            # Send email
+            logger.info("Connecting to SMTP server...")
+            with smtplib.SMTP(smtp_host, smtp_port) as server:
+                server.starttls()
+                logger.info("Logging into SMTP server...")
+                server.login(smtp_username, smtp_password)
+                logger.info("Sending email...")
+                server.send_message(msg)
+                
+            logger.info("Email sent successfully")
+            result["email_sent"] = True
+            result["smtp_status"] = "Email sent successfully"
+            
+        except Exception as e:
+            logger.error(f"Failed to send email: {str(e)}", exc_info=True)
+            result["email_sent"] = False
+            result["smtp_status"] = f"Failed to send email: {str(e)}"
+    else:
+        logger.error("Content generation failed, email not sent")
+        result["email_sent"] = False
+        result["smtp_status"] = "Content generation failed"
+    
+    logger.info("Test endpoint completed")
+    return result
 
 
