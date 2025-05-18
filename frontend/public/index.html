@@ -301,7 +301,7 @@
                 
                 <div class="attack-success-rate">
                     <h3>Estimated Success Rate: 76%</h3>
-                    <p>Based on our analysis, there's a high probability that at least one of these attack vectors would succeed in a real-world scenario.</p>
+                    <h3>Executing the Exploit</h3>
                 </div>
             </div>
             
@@ -334,7 +334,6 @@
             </div>
             
             <h2 class="question">Your Pentesting Results</h2>
-            <p class="subtitle">Based on our simulation, here's what a real pentest might reveal:</p>
             
             <div id="response-summary" class="response-summary">
                 <div class="click-stats">
@@ -363,6 +362,21 @@
                             <!-- Will be populated by JavaScript -->
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="scheduling-section">
+                <h3>Schedule Automated Pentests</h3>
+                <p class="subtitle">Set up regular security testing for your organization</p>
+                
+                <div class="schedule-controls">
+                    <select id="schedule-frequency" class="schedule-select">
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly" selected>Quarterly</option>
+                        <option value="biannual">Bi-Annual</option>
+                        <option value="annual">Annual</option>
+                    </select>
+                    <button class="schedule-button" id="schedule-test">Schedule Automated Tests</button>
                 </div>
             </div>
             
