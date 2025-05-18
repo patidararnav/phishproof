@@ -14,6 +14,7 @@ import hashlib
 import base64
 from typing import Dict, List
 from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load environment variables from .env file
 load_dotenv()
@@ -25,6 +26,15 @@ click_tracker: Dict[str, List[Dict]] = {}
 
 app = FastAPI()
 
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # In production, replace with your frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 def generate_tracking_link(employee: Employee, company_name: str) -> str:
     """Generate a unique tracking link for an employee"""
     # Create a unique identifier that includes employee info but is encoded
@@ -34,9 +44,9 @@ def generate_tracking_link(employee: Employee, company_name: str) -> str:
 
 @app.get("/track/{tracking_id}")
 async def track_click(tracking_id: str, request: Request):
-    """Track when a link is clicked"""
+    """Track when a link is clicked and show fake DocuSign medical form"""
     try:
-        # Decode the tracking ID to get employee information
+        # Record click data
         decoded_payload = base64.urlsafe_b64decode(tracking_id.encode()).decode()
         email, company_name, timestamp = decoded_payload.split(":", 2)
         
@@ -54,16 +64,182 @@ async def track_click(tracking_id: str, request: Request):
         click_tracker[tracking_id].append(click_data)
         logger.info(f"Tracked click for email {email}: {click_data}")
         
+        # Return fake DocuSign medical form
+        return HTMLResponse("""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>DocuSign - Regulatory Compliance Review</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    background: #f8f8f8;
+                }
+                .header {
+                    background: #fff;
+                    padding: 100px;
+                    border-bottom: 1px solid #ddd;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .docusign-logo {
+                    height: 40px;
+                }
+                .main-content {
+                    max-width: 850px;
+                    margin: 20px auto;
+                    background: white;
+                    padding: 30px;
+                    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                }
+                .envelope-id {
+                    color: #666;
+                    font-size: 12px;
+                    margin-bottom: 20px;
+                }
+                .form-header {
+                    background: #2B5796;
+                    color: white;
+                    padding: 15px;
+                    margin: -30px -30px 20px -30px;
+                }
+                .form-group {
+                    margin-bottom: 20px;
+                }
+                .form-label {
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                    display: block;
+                }
+                .form-input {
+                    width: 100%;
+                    padding: 8px;
+                    border: 1px solid #ddd;
+                    border-radius: 4px;
+                }
+                .required {
+                    background: #fff3cd;
+                    padding: 3px 8px;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    margin-left: 10px;
+                }
+                .upload-section {
+                    border: 2px dashed #ccc;
+                    padding: 20px;
+                    text-align: center;
+                    margin: 20px 0;
+                }
+                .button {
+                    background: #2B5796;
+                    color: white;
+                    padding: 12px 24px;
+                    border: none;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+                .top-bar {
+                    background: #333;
+                    color: white;
+                    padding: 10px;
+                    display: flex;
+                    justify-content: space-between;
+                }
+                .action-buttons {
+                    display: flex;
+                    gap: 10px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="top-bar">
+                <div>Review and complete</div>
+                <div class="action-buttons">
+                    <button class="button">Finish</button>
+                </div>
+            </div>
+            
+            <div class="header">
+                <img src="https://www.docusign.com/sites/default/files/docusign_logo.svg" class="docusign-logo">
+                <div>DEMONSTRATION DOCUMENT ONLY</div>
+            </div>
+            
+            <div class="main-content">
+                <div class="envelope-id">DocuSign Envelope ID: BCFD5923-4703-42AA-A63D-AFDC3C8EA909</div>
+                
+                <div class="form-header">
+                    <h2>Regulatory Compliance Documentation</h2>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Organization Name</label>
+                    <input type="text" class="form-input" placeholder="Enter organization name">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Compliance Officer<span class="required">Required</span></label>
+                    <input type="text" class="form-input" placeholder="Enter name">
+                </div>
+                
+                <div class="upload-section">
+                    <h3>Required Documentation Upload</h3>
+                    <p>Please upload the following compliance documents:</p>
+                    <ul style="text-align: left;">
+                        <li>Customer Data Privacy Records</li>
+                        <li>Data Processing Agreements</li>
+                        <li>Customer Consent Forms</li>
+                        <li>Third-party Data Sharing Documentation</li>
+                    </ul>
+                    <button class="button" onclick="recordUploadAttempt()">Upload Files</button>
+                </div>
+                
+                <button class="button" style="width: 100%" onclick="recordSubmission()">Submit for Review</button>
+            </div>
+            
+            <script>
+                function recordUploadAttempt() {
+                    fetch('/api/record-interaction', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            tracking_id: '""" + tracking_id + """',
+                            action: 'upload_attempt'
+                        })
+                    });
+                    setTimeout(() => {
+                        alert('This was a security awareness test. Please contact your IT department.');
+                    }, 500);
+                }
+                
+                function recordSubmission() {
+                    fetch('/api/record-interaction', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            tracking_id: '""" + tracking_id + """',
+                            action: 'submission_attempt'
+                        })
+                    });
+                    setTimeout(() => {
+                        alert('This was a security awareness test. Please contact your IT department.');
+                    }, 500);
+                }
+            </script>
+        </body>
+        </html>
+        """)
+        
     except Exception as e:
         logger.error(f"Error tracking click: {str(e)}")
-    
-    # Return a warning page
-    return HTMLResponse(
-        """<html><body style="font-family: Arial; text-align: center; padding: 50px;">
-        <h1>⚠️ Security Test</h1>
-        <p>This was a simulated phishing test. Please contact your IT department.</p>
-        </body></html>"""
-    )
+        return HTMLResponse("Error processing request")
 
 @app.get("/api/click-stats")
 async def get_click_stats():

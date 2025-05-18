@@ -66,30 +66,31 @@
             <div class="time-estimate">Takes ~15 minutes</div>
         </div>
 
-        <!-- Pre-Engagement: Industry Selection -->
+        <!-- Industry Selection -->
         <div class="form-screen" id="industry-screen">
             <div class="phase-progress">
                 <div class="progress-track">
-                    <div class="progress-fill" style="width: 25%"></div>
+                    <div class="progress-fill" style="width: 0%"></div>
                 </div>
                 <div class="phase-markers">
-                    <div class="phase-marker active completed" data-phase="planning"></div>
-                    <div class="phase-marker active" data-phase="discovery"></div>
+                    <div class="phase-marker active" data-phase="planning"></div>
+                    <div class="phase-marker" data-phase="discovery"></div>
                     <div class="phase-marker" data-phase="analysis"></div>
                     <div class="phase-marker" data-phase="attack"></div>
                     <div class="phase-marker" data-phase="results"></div>
                 </div>
                 <div class="phase-names">
-                    <div class="phase-name">Pre-engagement</div>
-                    <div class="phase-name active">Reconnaissance</div>
+                    <div class="phase-name active">Pre-engagement</div>
+                    <div class="phase-name">Reconnaissance</div>
                     <div class="phase-name">Analysis</div>
                     <div class="phase-name">Exploit</div>
                     <div class="phase-name">Results</div>
                 </div>
             </div>
-            
-            <h2 class="question">Select the primary threat</h2>
-            
+
+            <h2 class="question">Select Your Industry & Primary Threat</h2>
+            <p class="subtitle">Choose your industry and what concerns you most about your security posture.</p>
+
             <div class="industry-container" id="industry-selection">
                 <div class="industry-item" data-industry="finance">
                     <h3>Finance</h3>
@@ -172,18 +173,18 @@
         <div class="form-screen" id="legal-screen">
             <div class="phase-progress">
                 <div class="progress-track">
-                    <div class="progress-fill" style="width: 0%"></div>
+                    <div class="progress-fill" style="width: 25%"></div>
                 </div>
                 <div class="phase-markers">
-                    <div class="phase-marker active" data-phase="planning"></div>
-                    <div class="phase-marker" data-phase="discovery"></div>
+                    <div class="phase-marker completed" data-phase="planning"></div>
+                    <div class="phase-marker active" data-phase="discovery"></div>
                     <div class="phase-marker" data-phase="analysis"></div>
                     <div class="phase-marker" data-phase="attack"></div>
                     <div class="phase-marker" data-phase="results"></div>
                 </div>
                 <div class="phase-names">
-                    <div class="phase-name active">Pre-engagement</div>
-                    <div class="phase-name">Reconnaissance</div>
+                    <div class="phase-name">Pre-engagement</div>
+                    <div class="phase-name active">Reconnaissance</div>
                     <div class="phase-name">Analysis</div>
                     <div class="phase-name">Exploit</div>
                     <div class="phase-name">Results</div>
@@ -208,11 +209,9 @@
                 </div>
             </div>
             
-       
-            
             <div class="button-container">
                 <button class="back-button" type="button" data-prev="industry-screen">Back</button>
-                <button class="cta-button submit-btn" data-next="recon-screen">Run Reconnaissance</button>
+                <button class="cta-button" type="button" data-next="recon-screen">Run Reconnaissance</button>
             </div>
         </div>
 

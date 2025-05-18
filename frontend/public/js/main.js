@@ -199,14 +199,77 @@ document.addEventListener('DOMContentLoaded', function () {
             field.focus();
         }
     }
+
+    // Handle screen navigation
+    document.querySelectorAll('.form-screen').forEach(screen => {
+        // Back button handling
+        const backBtn = screen.querySelector('.back-button');
+        if (backBtn) {
+            backBtn.addEventListener('click', () => {
+                const prevScreen = backBtn.dataset.prev;
+                if (prevScreen) {
+                    document.querySelectorAll('.form-screen').forEach(s => s.classList.remove('active'));
+                    document.getElementById(prevScreen).classList.add('active');
+                }
+            });
+        }
+
+        // Forward button handling
+        const nextBtn = screen.querySelector('.cta-button');
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                const nextScreen = nextBtn.dataset.next;
+                if (nextScreen) {
+                    // Check if we're on the legal screen and validate checkboxes
+                    if (screen.id === 'legal-screen') {
+                        const checkedMethods = screen.querySelectorAll('input[name="recon-methods"]:checked');
+                        if (checkedMethods.length === 0) {
+                            alert('Please select at least one reconnaissance method.');
+                            return;
+                        }
+                    }
+
+                    document.querySelectorAll('.form-screen').forEach(s => s.classList.remove('active'));
+                    document.getElementById(nextScreen).classList.add('active');
+                }
+            });
+        }
+    });
+
+    // Update stats when reaching the thank you screen
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.target.classList.contains('active') &&
+                mutation.target.id === 'thank-you-screen') {
+                updateClickStats();
+            }
+        });
+    });
+
+    const thankYouScreen = document.getElementById('thank-you-screen');
+    if (thankYouScreen) {
+        observer.observe(thankYouScreen, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
+
+    // Update stats every 30 seconds if thank you screen is visible
+    setInterval(() => {
+        const thankYouScreen = document.getElementById('thank-you-screen');
+        if (thankYouScreen && thankYouScreen.classList.contains('active')) {
+            updateClickStats();
+        }
+    }, 30000);
 });
 
 async function updateClickStats() {
     try {
-        const response = await fetch('/api/click-stats');
+        // Update the URL to point to our backend API
+        const response = await fetch('http://localhost:8000/api/click-stats');
         const stats = await response.json();
 
-        // Update summary statistics
+        // Update total clicks
         document.getElementById('total-clicks').textContent = stats.total_clicks;
         document.getElementById('unique-users').textContent = stats.unique_users;
 
@@ -224,7 +287,7 @@ async function updateClickStats() {
                     </tr>
                 </thead>
                 <tbody>
-                    ${Object.entries(stats.user_stats).map(([email, data]) => `
+                    ${Object.entries(stats.user_stats || {}).map(([email, data]) => `
                         <tr>
                             <td>${email}</td>
                             <td>${data.company}</td>
@@ -239,7 +302,7 @@ async function updateClickStats() {
 
         // Update recent clicks list
         const clicksList = document.getElementById('clicks-list');
-        clicksList.innerHTML = stats.recent_clicks
+        clicksList.innerHTML = (stats.recent_clicks || [])
             .map(click => `
                 <div class="click-item">
                     <div class="click-time">
