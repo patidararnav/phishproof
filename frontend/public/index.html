@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishproof</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="logo-icon">🐟</div>
+    <div class="company-logo standalone-logo">Phishproof</div>
+    <div class="form-container">
+        <!-- Welcome/Landing Screen -->
+        <div class="form-screen active" id="welcome-screen">
+            <div class="hero-container">
+                <h2>98% of cyberattacks now rely on social engineering</h2>
+                <p class="subtitle">
+                    Don't let the wrong link be the weakest link 
+                </p>
+                <p class="subtitle emphasis">
+                    Schedule periodic dynamic pentests to protect your most valuable assets
+                </p>
+                
+                <button class="cta-button" id="start-button">Get Started</button>
+            </div>
+        </div>
+
+        <!-- Domain Input Screen -->
+        <div class="form-screen" id="domain-screen">
+            <h2>Penetration Testing Process</h2>
+            <div class="phase-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="phase-markers">
+                    <div class="phase-marker active" data-phase="planning"></div>
+                    <div class="phase-marker" data-phase="discovery"></div>
+                    <div class="phase-marker" data-phase="analysis"></div>
+                    <div class="phase-marker" data-phase="attack"></div>
+                    <div class="phase-marker" data-phase="results"></div>
+                </div>
+                <div class="phase-names">
+                    <div class="phase-name active">Pre-engagement</div>
+                    <div class="phase-name">Reconnaissance</div>
+                    <div class="phase-name">Analysis</div>
+                    <div class="phase-name">Exploit</div>
+                    <div class="phase-name">Results</div>
+                </div>
+            </div>
+            
+            <p class="process-description">
+                Our guided penetration testing follows a five-phase approach to assess your organization's security posture.
+            </p>
+            
+            <div class="input-container">
+                <label for="domain-input">Enter the domain for your organization</label>
+                <input type="text" id="domain-input" placeholder="example.com" autofocus>
+                <!-- <p class="input-helper">Enter the primary domain you want to analyze for security vulnerabilities</p> -->
+            </div>
+            
+            <div class="button-container">
+                <button class="back-button" type="button" data-prev="welcome-screen">Back</button>
+                <button class="cta-button" id="continue-button">Continue</button>
+            </div>
+            
+            <div class="time-estimate">Takes ~15 minutes</div>
+        </div>
+
+        <!-- Industry Selection -->
+        <div class="form-screen" id="industry-screen">
+            <div class="phase-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="phase-markers">
+                    <div class="phase-marker active" data-phase="planning"></div>
+                    <div class="phase-marker" data-phase="discovery"></div>
+                    <div class="phase-marker" data-phase="analysis"></div>
+                    <div class="phase-marker" data-phase="attack"></div>
+                    <div class="phase-marker" data-phase="results"></div>
+                </div>
+                <div class="phase-names">
+                    <div class="phase-name active">Pre-engagement</div>
+                    <div class="phase-name">Reconnaissance</div>
+                    <div class="phase-name">Analysis</div>
+                    <div class="phase-name">Exploit</div>
+                    <div class="phase-name">Results</div>
+                </div>
+            </div>
+
+            <h2 class="question">Select Your Industry & Primary Threat</h2>
+            <p class="subtitle">Choose your industry and what concerns you most about your security posture.</p>
+
+            <div class="industry-container" id="industry-selection">
+                <div class="industry-item" data-industry="finance">
+                    <h3>Finance</h3>
+                    <div class="objective-list">
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="finance-obj-1" value="financial-theft">
+                            <label for="finance-obj-1">Financial theft (direct fraud, wire transfers, ransomware)</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="finance-obj-2" value="data-theft">
+                            <label for="finance-obj-2">Data theft (customer credentials, card data)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="industry-item" data-industry="healthcare">
+                    <h3>Healthcare</h3>
+                    <div class="objective-list">
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="healthcare-obj-1" value="phi-theft">
+                            <label for="healthcare-obj-1">Theft of protected health information (PHI)</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="healthcare-obj-2" value="ransomware">
+                            <label for="healthcare-obj-2">Ransomware for extortion</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="healthcare-obj-3" value="service-disruption">
+                            <label for="healthcare-obj-3">Disruption of critical services</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="industry-item" data-industry="education">
+                    <h3>Education</h3>
+                    <div class="objective-list">
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="education-obj-1" value="data-theft">
+                            <label for="education-obj-1">Theft of student/staff data</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="education-obj-2" value="ransomware">
+                            <label for="education-obj-2">Ransomware for extortion</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="education-obj-3" value="espionage">
+                            <label for="education-obj-3">Espionage (research data, IP)</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="industry-item" data-industry="manufacturing">
+                    <h3>Manufacturing</h3>
+                    <div class="objective-list">
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="manufacturing-obj-1" value="ransomware">
+                            <label for="manufacturing-obj-1">Ransomware to halt production</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="manufacturing-obj-2" value="ip-theft">
+                            <label for="manufacturing-obj-2">Theft of intellectual property</label>
+                        </div>
+                        <div class="objective-item">
+                            <input type="radio" name="objective" id="manufacturing-obj-3" value="supply-chain">
+                            <label for="manufacturing-obj-3">Supply chain disruption</label>
+                        </div>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            <div class="button-container">
+                <button class="back-button" type="button" data-prev="welcome-screen">Back</button>
+                <button class="cta-button submit-btn" data-next="legal-screen">Next</button>
+            </div>
+        </div>
+
+        <!-- Legal and Contractual Considerations -->
+        <div class="form-screen" id="legal-screen">
+            <div class="phase-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 25%"></div>
+                </div>
+                <div class="phase-markers">
+                    <div class="phase-marker completed" data-phase="planning"></div>
+                    <div class="phase-marker active" data-phase="discovery"></div>
+                    <div class="phase-marker" data-phase="analysis"></div>
+                    <div class="phase-marker" data-phase="attack"></div>
+                    <div class="phase-marker" data-phase="results"></div>
+                </div>
+                <div class="phase-names">
+                    <div class="phase-name">Pre-engagement</div>
+                    <div class="phase-name active">Reconnaissance</div>
+                    <div class="phase-name">Analysis</div>
+                    <div class="phase-name">Exploit</div>
+                    <div class="phase-name">Results</div>
+                </div>
+            </div>
+            
+            <h2 class="question">Reconnaissance Methods Authorization</h2>
+            <p class="subtitle">Select which information gathering methods you authorize for this penetration test.</p>
+            
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="osint-search" name="recon-methods" value="osint-search" checked>
+                    <label for="osint-search">Open-source intelligence gathering on your organization</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="social-media" name="recon-methods" value="social-media" checked>
+                    <label for="social-media">Social media reconnaissance (LinkedIn, Twitter, etc.)</label>
+                </div>
+                <div class="checkbox-item">
+                    <input type="checkbox" id="domain-search" name="recon-methods" value="domain-search" checked>
+                    <label for="domain-search">Domain and subdomain enumeration</label>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button class="back-button" type="button" data-prev="industry-screen">Back</button>
+                <button class="cta-button" type="button" data-next="recon-screen">Run Reconnaissance</button>
+            </div>
+        </div>
+
+        <!-- Reconnaissance Visualization -->
+        <div class="form-screen" id="recon-screen">
+            <div class="phase-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 50%"></div>
+                </div>
+                <div class="phase-markers">
+                    <div class="phase-marker completed" data-phase="planning"></div>
+                    <div class="phase-marker completed" data-phase="discovery"></div>
+                    <div class="phase-marker active" data-phase="analysis"></div>
+                    <div class="phase-marker" data-phase="attack"></div>
+                    <div class="phase-marker" data-phase="results"></div>
+                </div>
+                <div class="phase-names">
+                    <div class="phase-name">Pre-engagement</div>
+                    <div class="phase-name">Reconnaissance</div>
+                    <div class="phase-name active">Analysis</div>
+                    <div class="phase-name">Exploit</div>
+                    <div class="phase-name">Results</div>
+                </div>
+            </div>
+            
+            <h2 class="question">Reconnaissance Results</h2>
+            <p class="subtitle">Based on your selections, we've mapped potential attack vectors.</p>
+            
+            <div class="visualization-container" id="recon-visualization">
+                <!-- Mermaid diagram would be rendered here -->
+                <div id="mermaid-diagram">
+                    <pre class="mermaid">
+                        graph TD
+                            A[Your Organization] --> B[Public Website]
+                            A --> C[Employee LinkedIn Profiles]
+                            A --> D[Domain Infrastructure]
+                            B --> E[Web Vulnerabilities]
+                            C --> F[Social Engineering Targets]
+                            D --> G[Email Systems]
+                            G --> H[Phishing Opportunities]
+                            F --> H
+                    </pre>
+                </div>
+            </div>
+            
+            <p>We've identified several potential attack vectors that could be exploited by malicious actors. The next step is to analyze these for vulnerabilities.</p>
+            
+            <div class="button-container">
+                <button class="back-button" type="button" data-prev="legal-screen">Back</button>
+                <button class="cta-button submit-btn" data-next="exploit-screen">Analyze Vulnerabilities</button>
+            </div>
+        </div>
+
+        <!-- Exploitation -->
+        <div class="form-screen" id="exploit-screen">
+            <div class="phase-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+                <div class="phase-markers">
+                    <div class="phase-marker completed" data-phase="planning"></div>
+                    <div class="phase-marker completed" data-phase="discovery"></div>
+                    <div class="phase-marker completed" data-phase="analysis"></div>
+                    <div class="phase-marker active" data-phase="attack"></div>
+                    <div class="phase-marker" data-phase="results"></div>
+                </div>
+                <div class="phase-names">
+                    <div class="phase-name">Pre-engagement</div>
+                    <div class="phase-name">Reconnaissance</div>
+                    <div class="phase-name">Analysis</div>
+                    <div class="phase-name active">Exploit</div>
+                    <div class="phase-name">Results</div>
+                </div>
+            </div>
+            
+            <h2 class="question">Exploitation Simulation</h2>
+            <p class="subtitle">Based on our analysis, these are the most likely successful attack paths:</p>
+            
+            <div class="visualization-container">
+                <h3>Potential Attack Vectors:</h3>
+                <ul>
+                    <li>Spear phishing campaign targeting 3 key executives</li>
+                    <li>Exploitation of outdated web frameworks on public website</li>
+                    <li>Social engineering via LinkedIn connection requests</li>
+                    <li>Password spraying attack against email systems</li>
+                </ul>
+                
+                <div class="attack-success-rate">
+                    <h3>Estimated Success Rate: 76%</h3>
+                    <h3>Executing the Exploit</h3>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button class="back-button" type="button" data-prev="recon-screen">Back</button>
+                <button class="cta-button submit-btn" data-next="thank-you-screen">See Results</button>
+            </div>
+        </div>
+
+        <!-- Thank You Screen / Results -->
+        <div class="form-screen" id="thank-you-screen">
+            <div class="phase-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" style="width: 100%"></div>
+                </div>
+                <div class="phase-markers">
+                    <div class="phase-marker completed" data-phase="planning"></div>
+                    <div class="phase-marker completed" data-phase="discovery"></div>
+                    <div class="phase-marker completed" data-phase="analysis"></div>
+                    <div class="phase-marker completed" data-phase="attack"></div>
+                    <div class="phase-marker active" data-phase="results"></div>
+                </div>
+                <div class="phase-names">
+                    <div class="phase-name">Pre-engagement</div>
+                    <div class="phase-name">Reconnaissance</div>
+                    <div class="phase-name">Analysis</div>
+                    <div class="phase-name">Exploit</div>
+                    <div class="phase-name active">Results</div>
+                </div>
+            </div>
+            
+            <h2 class="question">Your Pentesting Results</h2>
+            
+            <div id="response-summary" class="response-summary">
+                <div class="click-stats">
+                    <h3>Phishing Test Results</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-number" id="total-clicks">0</span>
+                            <span class="stat-label">Total Clicks</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-number" id="unique-users">0</span>
+                            <span class="stat-label">Unique Users</span>
+                        </div>
+                    </div>
+                    
+                    <div class="user-stats">
+                        <h4>User Click Details</h4>
+                        <div id="user-clicks-table" class="user-clicks-table">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="recent-clicks">
+                        <h4>Recent Click Activity</h4>
+                        <div id="clicks-list" class="clicks-list">
+                            <!-- Will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scheduling-section">
+                <h3>Schedule Automated Pentests</h3>
+                <p class="subtitle">Set up regular security testing for your organization</p>
+                
+                <div class="schedule-controls">
+                    <select id="schedule-frequency" class="schedule-select">
+                        <option value="monthly">Monthly</option>
+                        <option value="quarterly" selected>Quarterly</option>
+                        <option value="biannual">Bi-Annual</option>
+                        <option value="annual">Annual</option>
+                    </select>
+                    <button class="schedule-button" id="schedule-test">Schedule Automated Tests</button>
+                </div>
+            </div>
+            
+            <div class="button-container">
+                <button class="back-button" type="button" data-prev="exploit-screen">Back</button>
+                <button class="cta-button" id="schedule-button">Schedule Real Pentest</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
